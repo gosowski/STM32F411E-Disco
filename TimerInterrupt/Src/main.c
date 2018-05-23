@@ -60,9 +60,38 @@ static void MX_TIM10_Init(void);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-  if(htim->Instance == TIM10) {
-    HAL_GPIO_TogglePin(GPIOD, (uint16_t)0xf000);
+
+  static uint8_t state = 0;
+
+  switch (state) {
+  case 1:
+  case 5:
+    HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_15);
+    break;
+
+  case 2:
+  case 6:
+    HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_12);
+    break;
+
+  case 3:
+  case 7:
+    HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_13);
+    break;
+
+  case 4:
+  case 8:
+    HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_14);
+    break;
+
+  case 9:
+    state = 0;
+    break;
+
+  default:
+    break;
   }
+  ++state;
 }
 /* USER CODE END PFP */
 
