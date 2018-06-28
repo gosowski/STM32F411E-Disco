@@ -51,7 +51,7 @@ UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
-uint8_t received;
+uint8_t received[10];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -66,25 +66,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
 	uint8_t data[50];
 	uint16_t size = 0;
 
-	switch (received) {
-
-	case '0':
-		size = sprintf(data, "Switched OFF \r\n");
-		HAL_GPIO_WritePin(GPIOD, (uint16_t)0xf000, GPIO_PIN_RESET);
-		break;
-
-	case '1':
-		size = sprintf(data, "Switched ON \r\n");
-		HAL_GPIO_WritePin(GPIOD, (uint16_t)0xf000, GPIO_PIN_SET);
-		break;
-
-	default:
-		size = sprintf(data, "Char: %c not recognized! \r\n", received);
-		break;
-	}
+	size = sprintf(data, "Received msg: %s \n\r", received);
 
 	HAL_UART_Transmit_IT(&huart1, data, size);
-	HAL_UART_Receive_IT(&huart1, &received, 1);
+	HAL_UART_Receive_IT(&huart1, &received, 10);
+	HAL_GPIO_TogglePin(GPIOD, (uint16_t)0xf000);
 }
 /* USER CODE END PFP */
 
@@ -124,7 +110,7 @@ int main(void)
   MX_TIM10_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  HAL_UART_Receive_IT(&huart1,&received, 1);
+  HAL_UART_Receive_IT(&huart1,&received, 10);
   /* USER CODE END 2 */
 
   /* Infinite loop */
