@@ -4,14 +4,14 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 S_SRCS += \
-/home/gosowski/workspace/UART/SW4STM32/startup_stm32f411xe.s 
+/home/gosowski/workspace/STM32F411E-Disco/UART/SW4STM32/startup_stm32f411xe.s 
 
 OBJS += \
 ./Application/SW4STM32/startup_stm32f411xe.o 
 
 
 # Each subdirectory must supply rules for building sources it contributes
-Application/SW4STM32/startup_stm32f411xe.o: /home/gosowski/workspace/UART/SW4STM32/startup_stm32f411xe.s
+Application/SW4STM32/startup_stm32f411xe.o: /home/gosowski/workspace/STM32F411E-Disco/UART/SW4STM32/startup_stm32f411xe.s
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU GCC Assembler'
 	@echo $(PWD)
